@@ -21,11 +21,11 @@
  * --------------------------------------------------------------------------------------------- */
 
 int main(void) {
-    puts("Hello World!");
-    return 0;
-}
-
-__attribute__ ((interrupt ("machine"))) void ___rvsw_exception_handler___(void) {
-    assert(false && "We don't expect any exceptions to occur in this test program");
-    exit(1);
+    puts("Trying an illegal exception");
+    int i=0;
+    __asm__ volatile (\
+    "li a4, 100\n \
+     li a5, 10\n \
+     div a4, a5, a4");
+    return i;
 }

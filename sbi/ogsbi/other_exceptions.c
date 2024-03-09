@@ -55,8 +55,8 @@ void handle_other_exceptions(__attribute__((unused)) uint32_t registers[31], __a
             break;
         case 2://ILLEGAL_INSTRUCTION_EXCEPTION
             dputs("Illegal Instruction Exception");
-            soft_exception_handler();
-            assert(false && "TODO implement (emulate some instructions, and delegate others to S-Mode)");
+            soft_exception_handler(mepc, registers);
+            //assert(false && "TODO implement (emulate some instructions, and delegate others to S-Mode)");
             break;
         case 3://BREAKPOINT_EXCEPTION
             dputs("Breakpoint Exception");

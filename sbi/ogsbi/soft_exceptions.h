@@ -1,0 +1,1 @@
+void soft_exception_handler();

@@ -24,8 +24,8 @@ int main(void) {
     puts("Trying an illegal exception");
     int i=0;
     __asm__ volatile (\
-    "li a4, 100\n \
-     li a5, 10\n \
-     div a4, a5, a4");
+    "li t0, 100\n \
+     li t1, 10\n \
+     divu t2, t0, t1");
     return i;
 }

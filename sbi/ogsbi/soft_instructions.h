@@ -38,4 +38,4 @@ typedef union {
 } decoded_inst_t;
 
 void handle_r_type(inst_r_t *r_type, uint32_t *registers);
-void soft_exception_handler(uint32_t mepc, uint32_t *registers);
+void soft_instruction_handler(uint32_t mepc, uint32_t *registers);

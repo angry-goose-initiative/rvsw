@@ -22,8 +22,8 @@ set(OGSBI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/jump2linux.S
     ${CMAKE_CURRENT_SOURCE_DIR}/legacy.c
     ${CMAKE_CURRENT_SOURCE_DIR}/main.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/soft_exceptions.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/soft_exceptions.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/soft_instructions.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/soft_instructions.c
     ${CMAKE_CURRENT_SOURCE_DIR}/other_exceptions.c
     ${CMAKE_CURRENT_SOURCE_DIR}/sbi.c
     ${CMAKE_CURRENT_SOURCE_DIR}/timers.c

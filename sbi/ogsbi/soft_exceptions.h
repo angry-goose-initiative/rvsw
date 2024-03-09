@@ -34,7 +34,7 @@ typedef union {
     uint32_t raw; //ensure the compiler knows this data should be 32 bits wide
     inst_primitive_t primitive; //don't assume instruction type before checking opcode
     inst_r_t r_type;
-    //TODO: are we emulating other types?
+    //TODO: other types?
 } decoded_inst_t;
 
 void handle_r_type(inst_r_t *r_type, uint32_t *registers);

@@ -16,6 +16,7 @@
 
 #include "asm_c_interface.h"
 #include "common.h"
+#include "soft_exceptions.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -54,6 +55,7 @@ void handle_other_exceptions(__attribute__((unused)) uint32_t registers[31], __a
             break;
         case 2://ILLEGAL_INSTRUCTION_EXCEPTION
             dputs("Illegal Instruction Exception");
+            soft_exception_handler();
             assert(false && "TODO implement (emulate some instructions, and delegate others to S-Mode)");
             break;
         case 3://BREAKPOINT_EXCEPTION

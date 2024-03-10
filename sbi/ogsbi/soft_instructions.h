@@ -49,3 +49,6 @@ typedef union {
 
 void handle_r_type(inst_r_t *r_type, uint32_t *registers);
 void soft_instruction_handler(uint32_t mepc, uint32_t *registers);
+void misaligned_instruction_handler(uint32_t mepc);
+void misaligned_load_handler(uint32_t mepc);
+void misaligned_store_handler(uint32_t mepc);

@@ -27,12 +27,10 @@ void handle_r_type(inst_r_t *r_type, uint32_t *registers){
         case 0b0000001: //m-type extensions
             switch(r_type->funct3){
                 case 0b100: //div
-                    //rd <- rs1 / rs2
                     result = (int32_t)registers[r_type->rs1 - 1] / (int32_t)registers[r_type->rs2 - 1];
                     registers[r_type->rd - 1] = (uint32_t)result;
                     break;
                 case 0b101: //divu
-                    //rd <- rs1 / rs2
                     u_result = registers[r_type->rs1 - 1] / registers[r_type->rs2 - 1];
                     registers[r_type->rd - 1] = u_result;
                     break;
@@ -71,4 +69,19 @@ void soft_instruction_handler(uint32_t mepc, uint32_t *registers){
     }
     //need to increment the pc after handling the instruction
     RVSW_CSRW(mepc, RVSW_CSRR(mepc) + 4);
+}
+
+void misaligned_instruction_handler(uint32_t mepc){
+    dprintf("mepc value is 0x%x", mepc);
+    assert(false && "TODO implement misaligned instructions");
+}
+
+void misaligned_load_handler(uint32_t mepc){
+    dprintf("mepc value is 0x%x", mepc);
+    assert(false && "TODO implement misaligned loads");
+}
+
+void misaligned_store_handler(uint32_t mepc){
+    dprintf("mepc value is 0x%x", mepc);
+    assert(false && "TODO implement misaligned stores (no amo)");
 }

@@ -44,7 +44,7 @@ void handle_other_exceptions(__attribute__((unused)) uint32_t registers[31], __a
     switch (mcause) {
         case 0://INSTRUCTION_ADDRESS_MISALIGNED_EXCEPTION
             dputs("Instruction Address Misaligned Exception");
-            assert(false && "TODO implement misaligned accesses");
+            misaligned_instruction_handler(mepc);
             break;
         case 1://INSTRUCTION_ACCESS_FAULT_EXCEPTION
             dputs("Instruction Access Fault Exception");
@@ -56,7 +56,6 @@ void handle_other_exceptions(__attribute__((unused)) uint32_t registers[31], __a
         case 2://ILLEGAL_INSTRUCTION_EXCEPTION
             dputs("Illegal Instruction Exception");
             soft_instruction_handler(mepc, registers);
-            //assert(false && "TODO implement (emulate some instructions, and delegate others to S-Mode)");
             break;
         case 3://BREAKPOINT_EXCEPTION
             dputs("Breakpoint Exception");
@@ -66,7 +65,7 @@ void handle_other_exceptions(__attribute__((unused)) uint32_t registers[31], __a
             break;
         case 4://LOAD_ADDRESS_MISALIGNED_EXCEPTION
             dputs("Load Address Misaligned Exception");
-            assert(false && "TODO implement misaligned accesses");
+            misaligned_load_handler(mepc);
             break;
         case 5://LOAD_ACCESS_FAULT_EXCEPTION
             dputs("Load Access Fault Exception");
@@ -77,7 +76,7 @@ void handle_other_exceptions(__attribute__((unused)) uint32_t registers[31], __a
             break;
         case 6://STORE_OR_AMO_ADDRESS_MISALIGNED_EXCEPTION
             dputs("Store or AMO Address Misaligned Exception");
-            assert(false && "TODO implement misaligned accesses (don't even bother with AMOs, just stores)");
+            misaligned_store_handler(mepc);
             break;
         case 7://STORE_OR_AMO_ACCESS_FAULT_EXCEPTION
             dputs("Store or AMO Access Fault Exception");

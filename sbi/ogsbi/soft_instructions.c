@@ -1,3 +1,13 @@
+/**
+ * @file    soft_instructions.c
+ * @brief   Code to emulate unsupported instructions caused by illegal instruction exceptions
+ * 
+ * @copyright
+ *  Copyright (C) 2024 Eric Jessee\n
+ *  See the LICENSE file at the root of the project for licensing info.
+ *
+*/
+
 #include "asm_c_interface.h"
 #include "common.h"
 #include "soft_instructions.h"

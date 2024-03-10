@@ -3,7 +3,7 @@
  * @brief   Create illegal instruction exceptions for development of emulated instructions in ogsbi.
  * 
  * @copyright
- *  Copyright (C) 2023-2024 John Jekel\n
+ *  Copyright (C) 2024 Eric Jessee\n
  *  See the LICENSE file at the root of the project for licensing info.
 */
 

@@ -21,14 +21,28 @@
 
 void handle_r_type(inst_r_t *r_type, uint32_t *registers){
     dputs("handling r-type instruction");
+    int32_t result;
+    uint32_t u_result;
     switch(r_type->funct7){
         case 0b0000001: //m-type extensions
             switch(r_type->funct3){
+                case 0b100: //div
+                    //rd <- rs1 / rs2
+                    result = (int32_t)registers[r_type->rs1 - 1] / (int32_t)registers[r_type->rs2 - 1];
+                    registers[r_type->rd - 1] = (uint32_t)result;
+                    break;
                 case 0b101: //divu
                     //rd <- rs1 / rs2
-                    uint32_t result = registers[r_type->rs1 - 1] / registers[r_type->rs2 - 1];
-                    dprintf("result of division is %lu", result);
-                    registers[r_type->rd - 1] = result;
+                    u_result = registers[r_type->rs1 - 1] / registers[r_type->rs2 - 1];
+                    registers[r_type->rd - 1] = u_result;
+                    break;
+                case 0b110: //rem
+                    result = (int32_t)registers[r_type->rs1 - 1] % (int32_t)registers[r_type->rs2 - 1];
+                    registers[r_type->rd - 1] = (uint32_t)result;
+                    break;
+                case 0b111: //remu
+                    u_result = registers[r_type->rs1 - 1] % registers[r_type->rs2 - 1];
+                    registers[r_type->rd - 1] = u_result;
                     break;
                 default: 
                     assert(false && "unimplemented m-type instruction!");

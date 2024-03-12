@@ -72,16 +72,16 @@ void soft_instruction_handler(uint32_t mepc, uint32_t *registers){
 }
 
 void misaligned_instruction_handler(uint32_t mepc){
-    dprintf("mepc value is 0x%x", mepc);
+    dprintf("mepc value is 0x%lx", mepc);
     assert(false && "TODO implement misaligned instructions");
 }
 
 void misaligned_load_handler(uint32_t mepc){
-    dprintf("mepc value is 0x%x", mepc);
+    dprintf("mepc value is 0x%lx", mepc);
     assert(false && "TODO implement misaligned loads");
 }
 
 void misaligned_store_handler(uint32_t mepc){
-    dprintf("mepc value is 0x%x", mepc);
+    dprintf("mepc value is 0x%lx", mepc);
     assert(false && "TODO implement misaligned stores (no amo)");
 }

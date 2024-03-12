@@ -24,6 +24,7 @@ typedef enum {
 } rv32_opcode_e;
 
 //the compiler should pack these values into a 32-bit word based on the given bit fields
+//Empirically with GCC on RISC-V bitfield structs seem to always be ordered from lsb->msb
 typedef struct __attribute__ ((packed)) {
     rv32_opcode_e  opcode : 7;
     uint32_t       rd     : 5;
@@ -35,7 +36,7 @@ typedef struct __attribute__ ((packed)) {
 
 typedef struct __attribute__ ((packed)) {
     rv32_opcode_e opcode : 7; //first 7 bits are always the opcode
-    uint32_t      rem   : 25;
+    uint32_t      rem    : 25;
 } inst_primitive_t;
 
 //based on the opcode, we can decide which member of

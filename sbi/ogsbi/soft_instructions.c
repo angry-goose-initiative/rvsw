@@ -20,27 +20,66 @@
 #include <stdlib.h>
 
 void handle_r_type(inst_r_t *r_type, uint32_t *registers){
+    // __asm__ volatile ("div a0, a1, a2");
     dputs("handling r-type instruction");
     int32_t result;
     uint32_t u_result;
+    int64_t llresult;
+    uint64_t u_llresult;
+    //decrement rd, rs1, rs2 for convenience(index is off by 1)
+    r_type->rd--;
+    r_type->rs1--;
+    r_type->rs2--;
     switch(r_type->funct7){
         case 0b0000001: //m-type extensions
             switch(r_type->funct3){
-                case 0b100: //div
-                    result = (int32_t)registers[r_type->rs1 - 1] / (int32_t)registers[r_type->rs2 - 1];
-                    registers[r_type->rd - 1] = (uint32_t)result;
+                case MUL:
+                    result = (int32_t)registers[r_type->rs1] * (int32_t)registers[r_type->rs2];
+                    registers[r_type->rd] = (uint32_t)result;
                     break;
-                case 0b101: //divu
-                    u_result = registers[r_type->rs1 - 1] / registers[r_type->rs2 - 1];
-                    registers[r_type->rd - 1] = u_result;
+                case MULH: //upper 32 bits of signed*signed
+                    llresult = (int64_t)registers[r_type->rs1] * (int64_t)registers[r_type->rs2];
+                    registers[r_type->rd] = (uint32_t)(llresult>>32);
                     break;
-                case 0b110: //rem
-                    result = (int32_t)registers[r_type->rs1 - 1] % (int32_t)registers[r_type->rs2 - 1];
-                    registers[r_type->rd - 1] = (uint32_t)result;
+                case MULHU: //upper 32 bits of unsigned*unsigned
+                    u_llresult = (uint64_t)registers[r_type->rs1] * (uint64_t)registers[r_type->rs2];
+                    registers[r_type->rd] = (uint32_t)(u_llresult>>32);
                     break;
-                case 0b111: //remu
-                    u_result = registers[r_type->rs1 - 1] % registers[r_type->rs2 - 1];
-                    registers[r_type->rd - 1] = u_result;
+                case MULHSU: //upper 32 bits of signed*unsigned
+                    llresult = (int64_t)registers[r_type->rs1] * (int64_t)((uint64_t)registers[r_type->rs2]);
+                    registers[r_type->rd] = (uint32_t)(llresult>>32);
+                    break;
+                case DIV:
+                    if (!registers[r_type->rs2]){
+                        result = 0xffffffff;
+                    } else {
+                        result = (int32_t)registers[r_type->rs1] / (int32_t)registers[r_type->rs2];
+                    }
+                    registers[r_type->rd] = (uint32_t)result;
+                    break;
+                case DIVU:
+                    if (!registers[r_type->rs2]){
+                        u_result = 0xffffffff;
+                    } else {
+                        u_result = registers[r_type->rs1] / registers[r_type->rs2];
+                    }
+                    registers[r_type->rd] = u_result;
+                    break;
+                case REM:
+                    if (!registers[r_type->rs2]){
+                        result = registers[r_type->rs1];
+                    } else {
+                        result = (int32_t)registers[r_type->rs1] % (int32_t)registers[r_type->rs2];
+                    }
+                    registers[r_type->rd] = (uint32_t)result;
+                    break;
+                case REMU:
+                    if (!registers[r_type->rs2]){
+                        u_result = registers[r_type->rs1];
+                    } else {                
+                        u_result = registers[r_type->rs1] % registers[r_type->rs2];
+                    }
+                    registers[r_type->rd] = u_result;
                     break;
                 default: 
                     assert(false && "unimplemented m-type instruction!");

@@ -26,7 +26,7 @@ int main(void) {
     uint32_t a = 100;
     uint32_t b = 10;
     uint32_t c = a / b;
-    char str[50];
+    char str[100];
     sprintf(str, "the result of the division in smode is %lu", c);
     puts(str);
     puts("trying a signed divide (div)");
@@ -47,5 +47,24 @@ int main(void) {
     f = d % e;
     sprintf(str, "the result of the signed modulo in smode is %d", f);
     puts(str);
+    puts("trying a signed multiply");
+    d = 3;
+    e = -6;
+    f = d*e;
+    sprintf(str, "the result of the signed multiply in smode is %d", f);
+    puts(str);
+    puts("trying an unsigned 64-bit multiply");
+    //this should emit mul and mulhu
+    uint64_t g = 0x10000002;
+    uint64_t h = 0x1002;
+    uint64_t i = g*h; //should be 0x10020002004
+    sprintf(str, "the result of the unsigned 64-bit multiply in smode is 0x%llx", i);
+    puts(str);
+    puts("forcing a mulh instruction");
+    __asm__ volatile (
+        "li a7, -100\n"
+        "li a6, 10\n"
+        "mulh a5, a6, a7"
+    );
     return 0;
 }

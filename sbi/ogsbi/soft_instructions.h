@@ -23,12 +23,24 @@ typedef enum {
     SYSTEM = 0b11100    , RESERVED_3 = 0b11101, CUSTOM_3 = 0b11110  , BGE80 = 0b11111,
 } rv32_opcode_e;
 
+//referenced from irve/lib/execute.cpp
+typedef enum {
+    MUL = 0b000         ,
+    MULH = 0b001        ,
+    MULHSU = 0b010      ,
+    MULHU = 0b011       ,
+    DIV = 0b100         ,
+    DIVU = 0b101        ,
+    REM = 0b110         ,
+    REMU = 0b111        ,
+} rv32_funct3_e;
+
 //the compiler should pack these values into a 32-bit word based on the given bit fields
 //Empirically with GCC on RISC-V bitfield structs seem to always be ordered from lsb->msb
 typedef struct __attribute__ ((packed)) {
     rv32_opcode_e  opcode : 7;
     uint32_t       rd     : 5;
-    uint32_t       funct3 : 3;
+    rv32_funct3_e  funct3 : 3;
     uint32_t       rs1    : 5;
     uint32_t       rs2    : 5;
     uint32_t       funct7 : 7;

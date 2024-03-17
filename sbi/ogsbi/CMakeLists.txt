@@ -32,10 +32,11 @@ set(OGSBI_SOURCES
 
 macro(add_c_target NAME)
     add_target(${NAME} ${ARGN})
-
     #target_link_libraries(sbi__ogsbi__${NAME} rvswc)#TODO switch to this once we get it working
-    workaround_add_needed_c_static_libs_for_target(sbi__ogsbi__${NAME})#The workaround
+    #workaround_add_needed_c_static_libs_for_target(sbi__ogsbi__${NAME})#The workaround
+    workaround_add_needed_c_static_libs_for_target(ogsbi__${NAME})#The workaround
 endmacro()
 
 add_c_target(ogsbi ${OGSBI_SOURCES})
-target_include_directories(sbi__ogsbi__ogsbi PRIVATE ${PROJECT_BINARY_DIR}/include)#To get the generated rvsw.h
+#target_include_directories(sbi__ogsbi__ogsbi PRIVATE ${PROJECT_BINARY_DIR}/include)#To get the generated rvsw.h
+target_include_directories(ogsbi__ogsbi PRIVATE ${PROJECT_BINARY_DIR}/include)#To get the generated rvsw.h

@@ -1,0 +1,1 @@
+../../../irve_smode.ld

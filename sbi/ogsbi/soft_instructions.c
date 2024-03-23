@@ -114,17 +114,17 @@ void soft_instruction_handler(uint32_t mepc, uint32_t *registers){
     RVSW_CSRW(mepc, RVSW_CSRR(mepc) + 4);
 }
 
-void misaligned_instruction_handler(uint32_t mepc){
+void misaligned_instruction_handler([[maybe_unused]]uint32_t mepc){
     dprintf("mepc value is 0x%lx", mepc);
     assert(false && "TODO implement misaligned instructions");
 }
 
-void misaligned_load_handler(uint32_t mepc){
+void misaligned_load_handler([[maybe_unused]]uint32_t mepc){
     dprintf("mepc value is 0x%lx", mepc);
     assert(false && "TODO implement misaligned loads");
 }
 
-void misaligned_store_handler(uint32_t mepc){
+void misaligned_store_handler([[maybe_unused]]uint32_t mepc){
     dprintf("mepc value is 0x%lx", mepc);
     assert(false && "TODO implement misaligned stores (no amo)");
 }

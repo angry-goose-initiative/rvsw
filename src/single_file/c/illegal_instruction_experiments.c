@@ -22,6 +22,24 @@
  * --------------------------------------------------------------------------------------------- */
 
 int main(void) {
+    puts("forcing a mulh instruction");
+    __asm__ volatile (
+        "li a7, -100\n"
+        "li a6, 10\n"
+        "mulh a5, a6, a7"
+    );
+    puts("forcing a mulhu instruction");
+    __asm__ volatile (
+        "li a7, 100\n"
+        "li a6, 55\n"
+        "mulhu a5, a6, a7"
+    );
+    puts("forcing a mulhsu instruction");
+    __asm__ volatile (
+        "li a7, -10\n"
+        "li a6, 100\n"
+        "mulhsu a5, a6, a7"
+    );
     puts("Trying an unsigned divide (udiv)");
     uint32_t a = 100;
     uint32_t b = 10;
@@ -53,18 +71,12 @@ int main(void) {
     f = d*e;
     sprintf(str, "the result of the signed multiply in smode is %d", f);
     puts(str);
-    puts("trying an unsigned 64-bit multiply");
+    puts("trying an unsigned 64-bit multiply"); //why does this emit a billion instructions?
     //this should emit mul and mulhu
     uint64_t g = 0x10000002;
     uint64_t h = 0x1002;
     uint64_t i = g*h; //should be 0x10020002004
     sprintf(str, "the result of the unsigned 64-bit multiply in smode is 0x%llx", i);
     puts(str);
-    puts("forcing a mulh instruction");
-    __asm__ volatile (
-        "li a7, -100\n"
-        "li a6, 10\n"
-        "mulh a5, a6, a7"
-    );
     return 0;
 }

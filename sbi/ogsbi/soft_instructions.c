@@ -20,7 +20,6 @@
 #include <stdlib.h>
 
 void handle_r_type(inst_r_t *r_type, uint32_t *registers){
-    // __asm__ volatile ("div a0, a1, a2");
     dputs("handling r-type instruction");
     int32_t result;
     uint32_t u_result;
@@ -37,8 +36,8 @@ void handle_r_type(inst_r_t *r_type, uint32_t *registers){
                     result = (int32_t)registers[r_type->rs1] * (int32_t)registers[r_type->rs2];
                     registers[r_type->rd] = (uint32_t)result;
                     break;
-                case MULH: //upper 32 bits of signed*signed
-                    llresult = (int64_t)registers[r_type->rs1] * (int64_t)registers[r_type->rs2];
+                case MULH: //upper 32 bits of signed*signed -- double cast is necessary for sign extension
+                    llresult = (int64_t)((int32_t)registers[r_type->rs1]) * (int64_t)((int32_t)registers[r_type->rs2]);
                     registers[r_type->rd] = (uint32_t)(llresult>>32);
                     break;
                 case MULHU: //upper 32 bits of unsigned*unsigned
@@ -46,7 +45,7 @@ void handle_r_type(inst_r_t *r_type, uint32_t *registers){
                     registers[r_type->rd] = (uint32_t)(u_llresult>>32);
                     break;
                 case MULHSU: //upper 32 bits of signed*unsigned
-                    llresult = (int64_t)registers[r_type->rs1] * (int64_t)((uint64_t)registers[r_type->rs2]);
+                    llresult = (int64_t)((int32_t)registers[r_type->rs1]) * (int64_t)((uint64_t)registers[r_type->rs2]);
                     registers[r_type->rd] = (uint32_t)(llresult>>32);
                     break;
                 case DIV:
@@ -107,6 +106,7 @@ void soft_instruction_handler(uint32_t mepc, uint32_t *registers){
             break;
     }
     //need to increment the pc after handling the instruction
+    dputs("finished handling instruction, returning...");
     RVSW_CSRW(mepc, RVSW_CSRR(mepc) + 4);
 }
 

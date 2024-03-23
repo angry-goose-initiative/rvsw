@@ -49,8 +49,10 @@ void handle_r_type(inst_r_t *r_type, uint32_t *registers){
                     registers[r_type->rd] = (uint32_t)(llresult>>32);
                     break;
                 case DIV:
-                    if (!registers[r_type->rs2]){
+                    if (!registers[r_type->rs2]){ //divide by 0
                         result = 0xffffffff;
+                    } else if ((registers[r_type->rs1] == 0x80000000) && registers[r_type->rs2] == 0xffffffff) { //overflow
+                        result = 0x80000000;
                     } else {
                         result = (int32_t)registers[r_type->rs1] / (int32_t)registers[r_type->rs2];
                     }
@@ -67,6 +69,8 @@ void handle_r_type(inst_r_t *r_type, uint32_t *registers){
                 case REM:
                     if (!registers[r_type->rs2]){
                         result = registers[r_type->rs1];
+                    } else if ((registers[r_type->rs1] == 0x80000000) && registers[r_type->rs2] == 0xffffffff) { //overflow
+                        result = 0;                                                                                           
                     } else {
                         result = (int32_t)registers[r_type->rs1] % (int32_t)registers[r_type->rs2];
                     }

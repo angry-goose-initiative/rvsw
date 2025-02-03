@@ -23,3 +23,4 @@ add_asm_target(user_and_back_in_time_for_dinner user_and_back_in_time_for_dinner
 add_asm_target(atomics atomics.S)
 
 add_subdirectory(jzjcoresoftware)
+add_subdirectory(letc_pre_hazard)

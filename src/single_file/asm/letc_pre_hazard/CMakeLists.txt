@@ -23,5 +23,6 @@ macro(add_letc_pre_hazard_asm_target NAME)
 endmacro()
 
 add_letc_pre_hazard_asm_target(increment)
+add_letc_pre_hazard_asm_target(first_branch_test)
 
 #TODO others

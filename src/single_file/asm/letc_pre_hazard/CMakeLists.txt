@@ -22,7 +22,8 @@ macro(add_letc_pre_hazard_asm_target NAME)
     add_asm_target(${NAME} ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.S)
 endmacro()
 
-add_letc_pre_hazard_asm_target(increment)
+add_letc_pre_hazard_asm_target(dependency_problem_0)
 add_letc_pre_hazard_asm_target(first_branch_test)
+add_letc_pre_hazard_asm_target(increment)
 
 #TODO others

@@ -24,6 +24,7 @@ endmacro()
 
 add_letc_pre_hazard_asm_target(dependency_problem_0)
 add_letc_pre_hazard_asm_target(c_deadlock)
+add_letc_pre_hazard_asm_target(c_deadlock_simplified)
 add_letc_pre_hazard_asm_target(first_branch_test)
 add_letc_pre_hazard_asm_target(forwarding_sweep)
 add_letc_pre_hazard_asm_target(increment)

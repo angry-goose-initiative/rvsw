@@ -33,5 +33,6 @@ add_letc_pre_hazard_asm_target(store_to_load)
 add_letc_pre_hazard_asm_target(store_to_load_aftermath)
 add_letc_pre_hazard_asm_target(use_after_load)
 add_letc_pre_hazard_asm_target(all_loads)
+add_letc_pre_hazard_asm_target(all_loads_and_stores)
 
 #TODO others

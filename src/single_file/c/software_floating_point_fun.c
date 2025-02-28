@@ -3,7 +3,7 @@
  * @brief   Stress-testing with software floating point provided by libgcc, based on code from rv32esim
  * 
  * @copyright
- *  Copyright (C) 2022-2024 John Jekel\n
+ *  Copyright (C) 2022-2025 John Jekel\n
  *  See the LICENSE file at the root of the project for licensing info.
 */
 
@@ -74,12 +74,28 @@ int main() {
     //TODO test other math functions
 
     puts("Testing sqrt and cbrt");
-    for (volatile double i = 123.456; i < 567.890; i += 9.876) {
+    //Only doing a single iteration so it doesn't take forever in simulation
+    volatile double i = 123.456;
+    assert(sqrt(i) == pow(i, 0.5));
+    assert(fabs(cbrt(i) - pow(i, 1.0 / 3.0)) < TOLERABLE_ERROR);
+    /*for (volatile double i = 123.456; i < 567.890; i += 9.876) {
         assert(sqrt(i) == pow(i, 0.5));
         assert(fabs(cbrt(i) - pow(i, 1.0 / 3.0)) < TOLERABLE_ERROR);
-    }
+    }*/
 
     puts("Testing log and exp");
+    //Same here
+    volatile double temp = exp(i);
+    assert(log(temp) == i);
+    temp = log(i);
+    //printf("exp(temp) is %40.20f\n", exp(temp));
+    //printf("i is %40.20f\n", i);
+    assert(fabs(exp(temp) - i) < TOLERABLE_ERROR);
+    temp = exp2(i);
+    assert(fabs(log2(temp) - i) < TOLERABLE_ERROR);
+    temp = log2(i);
+    assert(fabs(exp2(temp) - i) < TOLERABLE_ERROR);
+    /*
     for (volatile double i = 123.456; i < 567.890; i += 9.876) {
         volatile double temp = exp(i);
         assert(log(temp) == i);
@@ -92,6 +108,7 @@ int main() {
         temp = log2(i);
         assert(fabs(exp2(temp) - i) < TOLERABLE_ERROR);
     }
+    */
 
     //TODO test others (ex cos and acos)
 

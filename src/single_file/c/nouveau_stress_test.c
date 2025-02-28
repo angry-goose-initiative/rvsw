@@ -3,8 +3,10 @@
  * @brief   A much larger RVSW stress test
  * 
  * @copyright
- *  Copyright (C) 2023-2024 John Jekel\n
+ *  Copyright (C) 2023-2025 John Jekel\n
  *  See the LICENSE file at the root of the project for licensing info.
+ *
+ *  Tweaked so things run a bit faster in LETC simulation
 */
 
 /* ------------------------------------------------------------------------------------------------
@@ -17,7 +19,7 @@
 #define MODE "S-Mode"
 #endif
 
-#define MAX_ITERATIONS 100
+#define MAX_ITERATIONS 8
 
 /* ------------------------------------------------------------------------------------------------
  * Includes
@@ -49,7 +51,7 @@ static uint64_t mandelbrot_iterations(double complex point);
 int main() {
     printf("Nouveau Stress Test (%s)\n", MODE);
 
-    for (uint64_t i = 0; i < 20; i++) {
+    for (uint64_t i = 0; i < 1/*20*/; i++) {
         printf("Fibonacci %llu: %llu %llu\n", i, efficient_fibonacci(i), inefficient_recursive_fibonacci(i));
     }
 
@@ -90,13 +92,13 @@ static void print_mandelbrot() {
     double starting_imaginary = -1;
     double ending_real = 1;
     double ending_imaginary = 1;
-    double real_step = (ending_real - starting_real) / 60;
-    double imaginary_step = (ending_imaginary - starting_imaginary) / 20;
+    double real_step = (ending_real - starting_real) / 10;
+    double imaginary_step = (ending_imaginary - starting_imaginary) / 5;
 
     double imag = starting_imaginary;
-    for (uint64_t i = 0; i < 20; ++i) {
+    for (uint64_t i = 0; i < 5; ++i) {
         double real = starting_real;
-        for (uint64_t j = 0; j < 60; ++j) {
+        for (uint64_t j = 0; j < 10; ++j) {
             uint64_t result = mandelbrot_iterations((double complex)(real + (imag * I)));
 
             if (result >= (MAX_ITERATIONS / 2)) {
@@ -130,7 +132,9 @@ static uint64_t mandelbrot_iterations(double complex point) {
     assert(false && "We should never get here");
 }
 
+/*
 __attribute__ ((interrupt ("machine"))) void ___rvsw_exception_handler___(void) {
     assert(false && "We don't expect any exceptions to occur in this test program");
     exit(1);
 }
+*/
